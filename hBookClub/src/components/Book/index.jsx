@@ -1,7 +1,7 @@
 import React from "react";
-import { Author, Title, Container, Cover} from "./styles";
+import { Author, Title, Container, Cover } from "./styles";
 
-const Book = ({ book }) => {
+const Book = ({ book, pickBook, isLarge }) => {
   const bookData = Array.isArray(book.book) ? book.book[0] : book.book || {};
   const title =
     bookData?.fr?.title ?? bookData?.title ?? book.title ?? "Titre inconnu";
@@ -16,13 +16,13 @@ const Book = ({ book }) => {
   const author = book?.author ?? "Auteur inconnu";
 
   return (
-    <Container>
+    <Container $isLarge={isLarge} onClick={() => pickBook(book)}>
       <Cover
         alt={`Couverture du livre ${title} écrit par ${author}`}
         src={cover}
       />
       <figcaption>
-        <Title>{title}</Title>
+        <Title $isLarge={isLarge}>{title}</Title>
         <Author>Par {author}</Author>
       </figcaption>
     </Container>
