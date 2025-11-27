@@ -3,7 +3,9 @@ import styled from "styled-components";
 export const Container = styled.div`
   background-color: #f8a7beff;
   padding: 160px 40px;
-  overflow: scroll;
+  overflow: ${({ $isPanelOpen }) =>
+    $isPanelOpen ? "hidden" : "scroll"}; //cf transient props
+  position: ${({ $isPanelOpen }) => ($isPanelOpen ? "fixed" : "unset")};
 
   @media (max-width: 800px) {
     padding: 114px 20px;

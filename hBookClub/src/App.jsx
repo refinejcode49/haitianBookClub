@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import BooksContainer from "./components/BooksContainer";
 import Header from "./components/Header";
-import DetailPanel from "./DetailPanel";
+import DetailPanel from "./components/DetailPanel";
 import { GlobalStyle } from "./styles";
 
 const App = () => {
@@ -12,9 +12,7 @@ const App = () => {
     const fetchData = async () => {
       try {
         const response = await fetch("/bookClubH.json");
-        console.log("here is what the fetch request returns", response);
         const books = await response.json();
-        console.log("our json-ified response: ", books);
         setBooks(books);
       } catch (error) {
         console.log(error);
@@ -27,15 +25,24 @@ const App = () => {
     setSelectedBook(book);
   };
 
-  console.log(selectedBook);
+  const closePanel = () => {
+    setSelectedBook(null);
+  };
 
   return (
     <>
       <GlobalStyle />
       <Header />
-      <BooksContainer books={books} pickBook={pickBook} />;
+      <BooksContainer
+        books={books}
+        pickBook={pickBook}
+        isPanelOpen={selectedBook !== null}
+      />
+      ;
       {/*Si le selectedBook est seclectionné, afficher le panel sinon erreur cannot read property of null */}
-      {selectedBook && <DetailPanel book={selectedBook} />}
+      {selectedBook && (
+        <DetailPanel book={selectedBook} closePanel={closePanel} />
+      )}
     </>
   );
 };
