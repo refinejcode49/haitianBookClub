@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import BooksContainer from "./components/BooksContainer";
 import Header from "./components/Header";
 import DetailPanel from "./components/DetailPanel";
 import { GlobalStyle } from "./styles";
+import { Transition } from "react-transition-group";
 
 const App = () => {
   const [books, setBooks] = useState([]);
   const [selectedBook, setSelectedBook] = useState(null);
+  const [showPanel, setShowPanel] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -23,12 +25,14 @@ const App = () => {
 
   const pickBook = (book) => {
     setSelectedBook(book);
+    setShowPanel(true);
   };
 
   const closePanel = () => {
-    setSelectedBook(null);
+    setShowPanel(false);
   };
 
+  const panelRef = useRef(null);
   return (
     <>
       <GlobalStyle />
@@ -36,13 +40,18 @@ const App = () => {
       <BooksContainer
         books={books}
         pickBook={pickBook}
-        isPanelOpen={selectedBook !== null}
+        isPanelOpen={showPanel}
       />
-      ;
-      {/*Si le selectedBook est seclectionné, afficher le panel sinon erreur cannot read property of null */}
-      {selectedBook && (
-        <DetailPanel book={selectedBook} closePanel={closePanel} />
-      )}
+      <Transition in={showPanel} timeout={300} nodeRef={panelRef}>
+        {(state) => (
+          <DetailPanel
+            book={selectedBook}
+            closePanel={closePanel}
+            state={state}
+            panel={panelRef}
+          />
+        )}
+      </Transition>
     </>
   );
 };
