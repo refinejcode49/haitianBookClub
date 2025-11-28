@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { Pill } from "../../styles";
 
 export const Panel = styled.article`
   background-color: #ffe581;
@@ -23,6 +24,7 @@ export const Panel = styled.article`
     bottom: ${({ $state }) =>
       $state === "entering" || $state === "entered" ? 0 : "-100vh"};
     right: unset;
+    z-index: 3;
   }
 `;
 
@@ -37,47 +39,8 @@ export const Em = styled.em`
   font-style: italic;
 `;
 
-/*to create the close button*/
-export const Close = styled.button`
-  background: none;
-  border: 0;
-  cursor: pointer;
-  height: 24px;
-  width: 24px;
-  padding: 0;
-  position: relative;
-
-  &::before,
-  &::after {
-    background-color: #000;
-    content: "";
-    height: 24px;
-    width: 2px;
-    position: absolute;
-    top: 0;
-    left: 9px;
-  }
-
-  &::before {
-    transform: rotate(45deg);
-  }
-
-  &::after {
-    transform: rotate(-45deg);
-  }
-`;
-
-export const CloseWrapper = styled.div`
-  background: #f8a7beff;
-  border: 2px solid #000;
-  border-radius: 30px;
-  height: 20px;
-  width: 20px;
-  padding: 8px;
+export const CloseWrapper = styled(Pill)`
   display: ${({ $state }) => ($state === "entered" ? "flex" : "none")};
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
   cursor: pointer;
   top: 120px;
   right: 40px;

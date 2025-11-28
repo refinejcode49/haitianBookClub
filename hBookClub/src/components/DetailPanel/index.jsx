@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { Panel, Em, P, Close, CloseWrapper, BG } from "./styles";
+import { Panel, Em, P, CloseWrapper, BG } from "./styles";
+import { Close } from "../../styles";
 import Book from "../Book";
 
 const DetailPanel = ({ book, closePanel, state, panelRef }) => {
